@@ -1,0 +1,28 @@
+type DApp @entity {
+  id: ID! # evm or wasm smart contract address
+  account: Account # developer account address
+  registered: Boolean! # true if the dApp is registered, false otherwise
+  stakes: [Stake] @derivedFrom(field: "dApp") #virtual field
+  rewards: [Reward] @derivedFrom(field: "dApp") #virtual field
+}
+
+type Account @entity {
+  id: ID! # account address
+  stakes: [Stake] @derivedFrom(field: "account") #virtual field
+  rewards: [Reward] @derivedFrom(field: "account") #virtual field
+}
+
+type Stake @entity {
+  id: ID! # AccountId - dAppId
+  account: Account! @index
+  dApp: DApp! @index
+  totalStake: BigInt!
+}
+
+type Reward @entity {
+  id: ID! # AccountId - dAppId
+  account: Account! @index
+  dApp: DApp! @index
+  totalReward: BigInt!
+}
+
