@@ -8,8 +8,8 @@ runner:
   query:
     name: '@subql/query'
     version: '*'
-description: Index stakers on dApp AstarDegen
-repository: 'https://github.com/subquery/astar-subql-starters'
+description: Index dApps and stakers for dApps Staking
+repository: 'https://github.com/GuiGou12358/Astar-dApps-Staking-Index'
 schema:
   file: ./schema.graphql
 network:
