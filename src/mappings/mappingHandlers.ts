@@ -63,8 +63,6 @@ export async function registerContract(event: SubstrateEvent): Promise<void> {
         },
     } = event;
 
-    await logger.info("---------- DappsStaking - New Contract --------- ");
-
     let dAppId = getDAppId(smartContract.toJSON());
     let dApp = await getDApp(dAppId);
 	dApp.accountId = account.toString();
@@ -79,8 +77,6 @@ export async function unregisterContract(event: SubstrateEvent): Promise<void> {
             data: [account, smartContract],
         },
     } = event;
-
-    await logger.info("---------- DappsStaking - Contract Removed --------- ");
 
     let dAppId = getDAppId(smartContract.toJSON());
     let dApp = await getDApp(dAppId);
