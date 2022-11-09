@@ -66,88 +66,73 @@ Finally, you should see a GraphQL playground is showing in the explorer and the 
 For the `subql-starter` project, you can try to query with the following code to get a taste of how it works.
 
 
-All stakers with their stake
+
+Total staked in dAppsStaking and all dApps with the number of stakers and total staked in the dApp
 ```graphql
 query{
-    accounts (
-        filter: { totalStake : {notEqualTo: "0"}}
-    ) {
+    stakes {
+        aggregates {sum{totalStake}}
+    }
+    dApps {
         totalCount
-        nodes{
+        nodes {
             id
-            totalStake
+            accountId
+            registered
+            stakes {
+                totalCount
+                aggregates{sum{totalStake}}
+            }
         }
     }
 }
 ```
 
-Query given stakers
+Query a specific dApp and display the stakers with their stake
+```graphql
+query{
+    dApps (
+      filter: {
+        id: {
+          equalTo: "..."
+        }
+      } 
+    ){
+      nodes {
+        id
+        accountId
+        registered
+        stakes {
+          totalCount
+          aggregates{sum{totalStake}}
+          nodes{
+            accountId
+            totalStake
+          }
+        }
+      }
+    }
+}
+```
+
+Query a specific staker and display its stakes 
 ```graphql
 query{
     accounts (
-        filter:{
-            id:{
-                in: [
-                    "..."
-                ]
+        filter: {
+            id: {
+                equalTo: "..."
             }
         }
     ){
         nodes {
             id
-            totalStake
-        }
-    }
-}
-```
-
-Some statistics
-```graphql
-query{
-    accounts (
-        filter: { totalStake : {notEqualTo: "0"}}
-    ) {
-        totalCount
-        aggregates {
-            sum {totalStake}
-            min {totalStake}
-            max {totalStake}
-            average {totalStake}
-        }
-    }
-}
-```
-
-All stakers with operations (stake/unstake/nominationTranfer)
-```graphql
-query{
-    accounts {
-        totalCount
-        nodes{
-            id
-            totalStake
             stakes {
-                nodes {
-                    id
-                    amount
-                }
-            }
-            unstakes {
-                nodes {
-                    id
-                    amount
-                }
-            }
-            nominationTransferIn {
-                nodes {
-                    id
-                    amount
-                }
-            }
-            nominationTransferOut {
-                nodes {
-                    id
-                    amount
+                totalCount
+                aggregates{sum{totalStake}}
+                nodes{
+                    dAppId
+                    totalStake
                 }
             }
         }
