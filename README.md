@@ -65,36 +65,13 @@ Finally, you should see a GraphQL playground is showing in the explorer and the 
 
 For the `subql-starter` project, you can try to query with the following code to get a taste of how it works.
 
-
-
-Total staked in dAppsStaking and all dApps with the number of stakers and total staked in the dApp
-```graphql
-query{
-    stakes {
-        aggregates {sum{totalStake}}
-    }
-    dApps {
-        totalCount
-        nodes {
-            id
-            accountId
-            registered
-            stakes {
-                totalCount
-                aggregates{sum{totalStake}}
-            }
-        }
-    }
-}
-```
-
 Query a specific dApp and display the stakers with their stake
 ```graphql
 query{
     dApps (
       filter: {
         id: {
-          equalTo: "..."
+          inInsensitive: ["..."]
         }
       } 
     ){
@@ -102,9 +79,11 @@ query{
         id
         accountId
         registered
-        stakes {
+        stakes (
+          filter: { totalStake : {notEqualTo: "0"} } 
+        ){
           totalCount
-          aggregates{sum{totalStake}}
+          aggregates{ sum {totalStake} }
           nodes{
             accountId
             totalStake
@@ -134,6 +113,27 @@ query{
                     dAppId
                     totalStake
                 }
+            }
+        }
+    }
+}
+```
+
+Total staked in dAppsStaking and all dApps with the number of stakers and total staked in the dApp
+```graphql
+query{
+    stakes {
+        aggregates {sum{totalStake}}
+    }
+    dApps {
+        totalCount
+        nodes {
+            id
+            accountId
+            registered
+            stakes {
+                totalCount
+                aggregates{sum{totalStake}}
             }
         }
     }
