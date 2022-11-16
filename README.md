@@ -106,7 +106,7 @@ query{
     ){
         nodes {
             id
-        		stakes ( filter: { totalStake : {notEqualTo: "0"} }  ){
+                stakes ( filter: { totalStake : {notEqualTo: "0"} }  ){
                 totalCount
                 aggregates{sum{totalStake}}
                 nodes{
