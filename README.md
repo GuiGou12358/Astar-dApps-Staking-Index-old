@@ -106,12 +106,13 @@ query{
     ){
         nodes {
             id
-            stakes {
+        		stakes ( filter: { totalStake : {notEqualTo: "0"} }  ){
                 totalCount
                 aggregates{sum{totalStake}}
                 nodes{
                     dAppId
                     totalStake
+                   dApp {registered}
                 }
             }
         }
