@@ -18,8 +18,7 @@ function getDAppId(smartContract: AnyJson): string {
 async function getDApp(dAppId: string): Promise<DApp> {
    let dApp = await DApp.get(dAppId);
     if (!dApp) {
-		dApp = new DApp(dAppId);
-		dApp.registered = false;
+		dApp = new DApp(dAppId, false);
     }
     return dApp;
 }
@@ -36,10 +35,7 @@ async function getStake(dAppId: string, accountId: string): Promise<Stake> {
     let stakeId = `${dAppId}-${accountId}`;
     let stake = await Stake.get(stakeId);
     if (!stake) {
-		stake = new Stake(stakeId);
-        stake.dAppId = dAppId;
-        stake.accountId = accountId;
-		stake.totalStake = BigInt(0);
+		stake = new Stake(stakeId, accountId, dAppId, BigInt(0));
     }
   return stake;
 }
@@ -48,10 +44,7 @@ async function getReward(dAppId: string, accountId: string): Promise<Reward> {
     let rewardId = `${dAppId}-${accountId}`;
     let reward = await Reward.get(rewardId);
     if (!reward) {
-		reward = new Reward(rewardId);
-        reward.dAppId = dAppId;
-        reward.accountId = accountId;
-		reward.totalReward = BigInt(0);
+		reward = new Reward(rewardId, accountId, dAppId, BigInt(0));
     }
   return reward;
 }

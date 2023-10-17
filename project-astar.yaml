@@ -1,0 +1,60 @@
+specVersion: 1.0.0
+name: astar-dapps-staking
+version: 0.0.1
+runner:
+  node:
+    name: '@subql/node'
+    version: '*'
+  query:
+    name: '@subql/query'
+    version: '*'
+description: Index dApps and stakers for dApps Staking
+repository: 'https://github.com/GuiGou12358/Astar-dApps-Staking-Index'
+schema:
+  file: ./schema.graphql
+network:
+  chainId: "0x9eb76c5184c4ab8679d2d5d819fdf90b9c001403e9e17da2e14b6d8aec4029c6"
+  endpoint: "wss://rpc.astar.network"
+  #endpoint: "wss://astar-rpc.dwellir.com"
+  dictionary: "https://api.subquery.network/sq/subquery/astar-dictionary"
+  chaintypes:
+    file: ./dist/chaintypes.js
+dataSources:
+  - kind: substrate/Runtime
+    startBlock: 234700
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - handler: registerContract
+          kind: substrate/EventHandler
+          filter:
+            module: dappsStaking
+            method: NewContract
+        - handler: unregisterContract
+          kind: substrate/EventHandler
+          filter:
+            module: dappsStaking
+            method: ContractRemoved
+        - handler: bondAndStake
+          kind: substrate/EventHandler
+          filter:
+            module: dappsStaking
+            method: BondAndStake
+        - handler: unbondAndUnstake
+          kind: substrate/EventHandler
+          filter:
+            module: dappsStaking
+            method: UnbondAndUnstake
+        - handler: nominationTransfer
+          kind: substrate/EventHandler
+          filter:
+            module: dappsStaking
+            method: NominationTransfer
+        - handler: reward
+          kind: substrate/EventHandler
+          filter:
+            module: dappsStaking
+            method: Reward
+
+
+

@@ -1,5 +1,5 @@
 specVersion: 1.0.0
-name: astar-starter
+name: astar-dapps-staking
 version: 0.0.1
 runner:
   node:
@@ -13,9 +13,10 @@ repository: 'https://github.com/GuiGou12358/Astar-dApps-Staking-Index'
 schema:
   file: ./schema.graphql
 network:
-  chainId: '0x9eb76c5184c4ab8679d2d5d819fdf90b9c001403e9e17da2e14b6d8aec4029c6'
-  endpoint: 'wss://astar.api.onfinality.io/public-wss'
-  dictionary: 'https://api.subquery.network/sq/subquery/astar-dictionary'
+  chainId: "0xf1cf9022c7ebb34b162d5b5e34e705a5a740b2d0ecc1009fb89023e62a488108"
+  endpoint: "wss://rpc.shiden.astar.network"
+  #endpoint: "wss://shiden-rpc.dwellir.com"
+  dictionary: "https://api.subquery.network/sq/subquery/shiden-dictionary"
   chaintypes:
     file: ./dist/chaintypes.js
 dataSources:
